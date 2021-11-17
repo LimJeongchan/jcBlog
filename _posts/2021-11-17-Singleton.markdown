@@ -20,23 +20,111 @@ categories: jekyll update
 
 4. 싱글턴 구현
 	- Eager initializaion
+		```java
+			public class EagerSington {
+				private static EagerSington instance = new EagerSington();
+
+				private EagerSington() {
+				}
+
+				public static EagerSington getInstance(){
+					return instance;
+				}
+			}
+		```
 		- 클라이언트에서 사용하지 않더라도 인스턴스가 항상 생성됨
 		- 예외 처리를 할 수 있는 방법이 없음
 	- Static block initializaion
+		```java
+			public class StaticBlockSingleton {
+				private static StaticBlockSingleton instace;
+
+				static {
+					try {
+						instace = new StaticBlockSingleton();
+					} catch (Exception e) {
+						throw new RuntimeException("싱글톤 객체 생성 오류");
+					}
+				}
+				public static StaticBlockSingleton getInstance(){
+					return instace;
+				}
+			}
+		```
 		- Eager initializaion과 유사, 인스턴스가  static block 내에서 생성됨.
 		- 예외 처리 가능
 		- 처음  시작할 때 초기화 되어 메모리 낭비 유발.
 	- Lazy initializaion
+		```java
+			import java.util.Objects;
+
+			public class LazyInitializaitonSingletion {
+				private static LazyInitializaitonSingletion instace;
+
+				private LazyInitializaitonSingletion() {}
+
+				public static LazyInitializaitonSingletion getInstance() {
+					if(Objects.isNull(instace)) {
+						instace = new LazyInitializaitonSingletion();
+					}
+					return instace;
+				}
+			}
+		```
 		- getInctace() 호출 이외에는 인스턴스를 생성하지 않음.
 		- Eager initializaion의 단점을 보완
 		- Thread safety 하지 않음.
 	- Tread safe initializaion
+		```java
+			public class ThreadSafeSington {
+				private static ThreadSafeSington instance;
+
+				private ThreadSafeSington() {}
+
+				public static synchronized ThreadSafeSington getInstance(){
+					if(instance == null) {
+						instance = new ThreadSafeSington();
+					}
+					return instance;
+				}
+			}
+		```
 		- synchronized를 이용해서 하나의 스레드만 접근 가능하도록 설정
 		- 성능 저하를 야기하는 비효율적인 방법(느리다.)
 	- Double-Checked Locking
+		```java
+			public class StaticBlockSingleton {
+				private static StaticBlockSingleton instace;
+
+				static {
+					try {
+						instace = new StaticBlockSingleton();
+					} catch (Exception e) {
+						throw new RuntimeException("싱글톤 객체 생성 오류");
+					}
+				}
+				public static StaticBlockSingleton getInstance(){
+					return instace;
+				}
+			}
+		```
 		- Null 체크를 synchronized 블록 밖에서 한번, 안에서 한번 총 두 번 실행
 		- 밖에서 하는 체크는 인스턴스가 있는 경우 빠르게 리턴하기 위해서 안쪽에서 하는 체크는 인스턴스가 생성되지 않은 경우 하나의 인스턴스만 생성하기 위해.
 	- Bill Pugh Solution
+		```java
+			public class BillPughSingleton {
+				private BillPughSingleton() {
+				}
+
+				private static class SingletonHelper {
+					private static final BillPughSingleton instace = new BillPughSingleton();
+				}
+
+				public static BillPughSingleton getInstance() {
+					return SingletonHelper.instace;
+				}
+			}
+		```
 		- Double Checked에 비해 구현이 간단.
 		- Lazy Loding이 가능
 		- Thread safety
