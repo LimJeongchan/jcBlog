@@ -93,19 +93,15 @@ categories: jekyll update
 		- 성능 저하를 야기하는 비효율적인 방법(느리다.)
 	- Double-Checked Locking
 		```java
-			public class StaticBlockSingleton {
-				private static StaticBlockSingleton instace;
-
-				static {
-					try {
-						instace = new StaticBlockSingleton();
-					} catch (Exception e) {
-						throw new RuntimeException("싱글톤 객체 생성 오류");
+			private static DoubleCheckedLockingSingleton getInstance() {
+				if (Objects.isNull(instace)) {
+					synchronized (DoubleCheckedLockingSingleton.class) {
+						if (Objects.isNull(instace)) {
+							instace = new DoubleCheckedLockingSingleton();
+						}
 					}
 				}
-				public static StaticBlockSingleton getInstance(){
-					return instace;
-				}
+				return instace;
 			}
 		```
 		- Null 체크를 synchronized 블록 밖에서 한번, 안에서 한번 총 두 번 실행
