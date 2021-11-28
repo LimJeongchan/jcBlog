@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="싱글톤 패턴" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","headline":"싱글톤 패턴","dateModified":"2021-11-17T13:33:03+09:00","datePublished":"2021-11-17T13:33:03+09:00","description":"목표 : 싱글톤 패턴에 대해서 공부하여 자료를 만들고 스터디 그룹에서 발표한다.","url":"http://localhost:4000/jekyll/update/2021/11/17/Singleton.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/update/2021/11/17/Singleton.html"},"@context":"https://schema.org"}</script>
+{"headline":"싱글톤 패턴","dateModified":"2021-11-17T13:33:03+09:00","datePublished":"2021-11-17T13:33:03+09:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/update/2021/11/17/Singleton.html"},"description":"목표 : 싱글톤 패턴에 대해서 공부하여 자료를 만들고 스터디 그룹에서 발표한다.","url":"http://localhost:4000/jekyll/update/2021/11/17/Singleton.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="임정찬의 블로그" /></head>
 <body><header class="site-header" role="banner">
@@ -73,38 +73,38 @@
   <li>싱글턴 구현
     <ul>
       <li>Eager initializaion
-        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      <span class="kd">public</span> <span class="kd">class</span> <span class="nc">EagerSington</span> <span class="o">{</span>
-          <span class="kd">private</span> <span class="kd">static</span> <span class="nc">EagerSington</span> <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">EagerSington</span><span class="o">();</span>
+        <pre><code class="language-java">      public class EagerSington {
+          private static EagerSington instance = new EagerSington();
 
-          <span class="kd">private</span> <span class="nf">EagerSington</span><span class="o">()</span> <span class="o">{</span>
-          <span class="o">}</span>
+          private EagerSington() {
+          }
 
-          <span class="kd">public</span> <span class="kd">static</span> <span class="nc">EagerSington</span> <span class="nf">getInstance</span><span class="o">(){</span>
-              <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
-          <span class="o">}</span>
-      <span class="o">}</span>
-</code></pre></div>        </div>
+          public static EagerSington getInstance(){
+              return instance;
+          }
+      }
+</code></pre>
         <ul>
           <li>클라이언트에서 사용하지 않더라도 인스턴스가 항상 생성됨</li>
           <li>예외 처리를 할 수 있는 방법이 없음</li>
         </ul>
       </li>
       <li>Static block initializaion
-        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      <span class="kd">public</span> <span class="kd">class</span> <span class="nc">StaticBlockSingleton</span> <span class="o">{</span>
-          <span class="kd">private</span> <span class="kd">static</span> <span class="nc">StaticBlockSingleton</span> <span class="n">instace</span><span class="o">;</span>
+        <pre><code class="language-java">      public class StaticBlockSingleton {
+          private static StaticBlockSingleton instace;
 
-          <span class="kd">static</span> <span class="o">{</span>
-              <span class="k">try</span> <span class="o">{</span>
-                  <span class="n">instace</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StaticBlockSingleton</span><span class="o">();</span>
-              <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                  <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"싱글톤 객체 생성 오류"</span><span class="o">);</span>
-              <span class="o">}</span>
-          <span class="o">}</span>
-          <span class="kd">public</span> <span class="kd">static</span> <span class="nc">StaticBlockSingleton</span> <span class="nf">getInstance</span><span class="o">(){</span>
-              <span class="k">return</span> <span class="n">instace</span><span class="o">;</span>
-          <span class="o">}</span>
-      <span class="o">}</span>
-</code></pre></div>        </div>
+          static {
+              try {
+                  instace = new StaticBlockSingleton();
+              } catch (Exception e) {
+                  throw new RuntimeException("싱글톤 객체 생성 오류");
+              }
+          }
+          public static StaticBlockSingleton getInstance(){
+              return instace;
+          }
+      }
+</code></pre>
         <ul>
           <li>Eager initializaion과 유사, 인스턴스가  static block 내에서 생성됨.</li>
           <li>예외 처리 가능</li>
@@ -112,21 +112,21 @@
         </ul>
       </li>
       <li>Lazy initializaion
-        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      <span class="kn">import</span> <span class="nn">java.util.Objects</span><span class="o">;</span>
+        <pre><code class="language-java">      import java.util.Objects;
 
-      <span class="kd">public</span> <span class="kd">class</span> <span class="nc">LazyInitializaitonSingletion</span> <span class="o">{</span>
-          <span class="kd">private</span> <span class="kd">static</span> <span class="nc">LazyInitializaitonSingletion</span> <span class="n">instace</span><span class="o">;</span>
+      public class LazyInitializaitonSingletion {
+          private static LazyInitializaitonSingletion instace;
 
-          <span class="kd">private</span> <span class="nf">LazyInitializaitonSingletion</span><span class="o">()</span> <span class="o">{}</span>
+          private LazyInitializaitonSingletion() {}
 
-          <span class="kd">public</span> <span class="kd">static</span> <span class="nc">LazyInitializaitonSingletion</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
-              <span class="k">if</span><span class="o">(</span><span class="nc">Objects</span><span class="o">.</span><span class="na">isNull</span><span class="o">(</span><span class="n">instace</span><span class="o">))</span> <span class="o">{</span>
-                  <span class="n">instace</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LazyInitializaitonSingletion</span><span class="o">();</span>
-              <span class="o">}</span>
-              <span class="k">return</span> <span class="n">instace</span><span class="o">;</span>
-          <span class="o">}</span>
-      <span class="o">}</span>
-</code></pre></div>        </div>
+          public static LazyInitializaitonSingletion getInstance() {
+              if(Objects.isNull(instace)) {
+                  instace = new LazyInitializaitonSingletion();
+              }
+              return instace;
+          }
+      }
+</code></pre>
         <ul>
           <li>getInctace() 호출 이외에는 인스턴스를 생성하지 않음.</li>
           <li>Eager initializaion의 단점을 보완</li>
@@ -134,59 +134,55 @@
         </ul>
       </li>
       <li>Tread safe initializaion
-        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ThreadSafeSington</span> <span class="o">{</span>
-          <span class="kd">private</span> <span class="kd">static</span> <span class="nc">ThreadSafeSington</span> <span class="n">instance</span><span class="o">;</span>
+        <pre><code class="language-java">      public class ThreadSafeSington {
+          private static ThreadSafeSington instance;
 
-          <span class="kd">private</span> <span class="nf">ThreadSafeSington</span><span class="o">()</span> <span class="o">{}</span>
+          private ThreadSafeSington() {}
 
-          <span class="kd">public</span> <span class="kd">static</span> <span class="kd">synchronized</span> <span class="nc">ThreadSafeSington</span> <span class="nf">getInstance</span><span class="o">(){</span>
-              <span class="k">if</span><span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                  <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ThreadSafeSington</span><span class="o">();</span>
-              <span class="o">}</span>
-              <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
-          <span class="o">}</span>
-      <span class="o">}</span>
-</code></pre></div>        </div>
+          public static synchronized ThreadSafeSington getInstance(){
+              if(instance == null) {
+                  instance = new ThreadSafeSington();
+              }
+              return instance;
+          }
+      }
+</code></pre>
         <ul>
           <li>synchronized를 이용해서 하나의 스레드만 접근 가능하도록 설정</li>
           <li>성능 저하를 야기하는 비효율적인 방법(느리다.)</li>
         </ul>
       </li>
       <li>Double-Checked Locking
-        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      <span class="kd">public</span> <span class="kd">class</span> <span class="nc">StaticBlockSingleton</span> <span class="o">{</span>
-          <span class="kd">private</span> <span class="kd">static</span> <span class="nc">StaticBlockSingleton</span> <span class="n">instace</span><span class="o">;</span>
-
-          <span class="kd">static</span> <span class="o">{</span>
-              <span class="k">try</span> <span class="o">{</span>
-                  <span class="n">instace</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StaticBlockSingleton</span><span class="o">();</span>
-              <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                  <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"싱글톤 객체 생성 오류"</span><span class="o">);</span>
-              <span class="o">}</span>
-          <span class="o">}</span>
-          <span class="kd">public</span> <span class="kd">static</span> <span class="nc">StaticBlockSingleton</span> <span class="nf">getInstance</span><span class="o">(){</span>
-              <span class="k">return</span> <span class="n">instace</span><span class="o">;</span>
-          <span class="o">}</span>
-      <span class="o">}</span>
-</code></pre></div>        </div>
+        <pre><code class="language-java">      private static DoubleCheckedLockingSingleton getInstance() {
+          if (Objects.isNull(instace)) {
+              synchronized (DoubleCheckedLockingSingleton.class) {
+                  if (Objects.isNull(instace)) {
+                      instace = new DoubleCheckedLockingSingleton();
+                  }
+              }
+          }
+          return instace;
+      }
+</code></pre>
         <ul>
           <li>Null 체크를 synchronized 블록 밖에서 한번, 안에서 한번 총 두 번 실행</li>
           <li>밖에서 하는 체크는 인스턴스가 있는 경우 빠르게 리턴하기 위해서 안쪽에서 하는 체크는 인스턴스가 생성되지 않은 경우 하나의 인스턴스만 생성하기 위해.</li>
         </ul>
       </li>
       <li>Bill Pugh Solution
-        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      <span class="kd">public</span> <span class="kd">class</span> <span class="nc">BillPughSingleton</span> <span class="o">{</span>
-          <span class="kd">private</span> <span class="nf">BillPughSingleton</span><span class="o">()</span> <span class="o">{</span>
-          <span class="o">}</span>
+        <pre><code class="language-java">      public class BillPughSingleton {
+          private BillPughSingleton() {
+          }
 
-          <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">SingletonHelper</span> <span class="o">{</span>
-              <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">BillPughSingleton</span> <span class="n">instace</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BillPughSingleton</span><span class="o">();</span>
-          <span class="o">}</span>
+          private static class SingletonHelper {
+              private static final BillPughSingleton instace = new BillPughSingleton();
+          }
 
-          <span class="kd">public</span> <span class="kd">static</span> <span class="nc">BillPughSingleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
-              <span class="k">return</span> <span class="nc">SingletonHelper</span><span class="o">.</span><span class="na">instace</span><span class="o">;</span>
-          <span class="o">}</span>
-      <span class="o">}</span>
-</code></pre></div>        </div>
+          public static BillPughSingleton getInstance() {
+              return SingletonHelper.instace;
+          }
+      }
+</code></pre>
         <ul>
           <li>Double Checked에 비해 구현이 간단.</li>
           <li>Lazy Loding이 가능</li>
