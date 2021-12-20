@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "싱글톤 패턴"
-date:   2021-11-17 13:33:03 +0900
-categories: jekyll update
+date:   2021-11-01 13:33:03 +0900
+categories: study update
 ---
 - 목표 : 싱글톤 패턴에 대해서 공부하여 자료를 만들고 스터디 그룹에서 발표한다.
 

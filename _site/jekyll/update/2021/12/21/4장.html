@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>04장 웹 프레젠테이션 패턴 | 임정찬의 블로그</title>
+<meta name="generator" content="Jekyll v4.2.1" />
+<meta property="og:title" content="04장 웹 프레젠테이션 패턴" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="학습목표 : 웹 프레젠테이션 계층에서 고려해야될 패턴에 대해 알아보자. 웹 프레젠테이션 패턴 웹 브라우저 기반 사용자 인터페이스는 클라이언트 소프트웨어를 설치할 필요가 없고, 공통적인 UI를 제공하며, 사용하기 쉬운 범용적 접근을 제공하며, 다양한 환경에서 손쉽게 앱을 구축할 수 있는 장점이 있다. 웹 앱을 준비하는 작업은 서버 소프트웨어를 구상하는 것부터 시작 웹서버의 역활은 요청을 받으면 URL을 해석하고 웹 서버 프로그램으로 제어권을 넘겨주는 것이다. 웹서버 프로그램을 구성하는 방식에는 두 가지 주요 형식이 있다. 스크립트 : CGI 스크립트, 자바 서블릿 서버 페이지 : JSP, ASP, PHP 모델 뷰 컨트롤러 모델 뷰 컨트롤러는 잘못 이해되는 경우가 많다. 컨트롤러 용어를 입력 컨트롤러라 생각하면 이해하기 쉽다.모델 뷰 컨트롤러는 잘못 이해되는 경우가 많다. 컨트롤러 용어를 입력 컨트롤러라 생각하면 이해하기 쉽다. 모델 뷰 컨트롤러를 적용하는 가장 중요한 이유는 모델을 웹 프레젠테이션으로 부터 완전이 분리하기 위해서 이다. (프레젠테이션 수정이 쉽다, 다른 프레젠테이션 추가 용이, 테스트 수월) -" />
+<meta property="og:description" content="학습목표 : 웹 프레젠테이션 계층에서 고려해야될 패턴에 대해 알아보자. 웹 프레젠테이션 패턴 웹 브라우저 기반 사용자 인터페이스는 클라이언트 소프트웨어를 설치할 필요가 없고, 공통적인 UI를 제공하며, 사용하기 쉬운 범용적 접근을 제공하며, 다양한 환경에서 손쉽게 앱을 구축할 수 있는 장점이 있다. 웹 앱을 준비하는 작업은 서버 소프트웨어를 구상하는 것부터 시작 웹서버의 역활은 요청을 받으면 URL을 해석하고 웹 서버 프로그램으로 제어권을 넘겨주는 것이다. 웹서버 프로그램을 구성하는 방식에는 두 가지 주요 형식이 있다. 스크립트 : CGI 스크립트, 자바 서블릿 서버 페이지 : JSP, ASP, PHP 모델 뷰 컨트롤러 모델 뷰 컨트롤러는 잘못 이해되는 경우가 많다. 컨트롤러 용어를 입력 컨트롤러라 생각하면 이해하기 쉽다.모델 뷰 컨트롤러는 잘못 이해되는 경우가 많다. 컨트롤러 용어를 입력 컨트롤러라 생각하면 이해하기 쉽다. 모델 뷰 컨트롤러를 적용하는 가장 중요한 이유는 모델을 웹 프레젠테이션으로 부터 완전이 분리하기 위해서 이다. (프레젠테이션 수정이 쉽다, 다른 프레젠테이션 추가 용이, 테스트 수월) -" />
+<link rel="canonical" href="http://localhost:4000/jekyll/update/2021/12/21/4%EC%9E%A5.html" />
+<meta property="og:url" content="http://localhost:4000/jekyll/update/2021/12/21/4%EC%9E%A5.html" />
+<meta property="og:site_name" content="임정찬의 블로그" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-12-21T00:58:03+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="04장 웹 프레젠테이션 패턴" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","headline":"04장 웹 프레젠테이션 패턴","dateModified":"2021-12-21T00:58:03+09:00","datePublished":"2021-12-21T00:58:03+09:00","description":"학습목표 : 웹 프레젠테이션 계층에서 고려해야될 패턴에 대해 알아보자. 웹 프레젠테이션 패턴 웹 브라우저 기반 사용자 인터페이스는 클라이언트 소프트웨어를 설치할 필요가 없고, 공통적인 UI를 제공하며, 사용하기 쉬운 범용적 접근을 제공하며, 다양한 환경에서 손쉽게 앱을 구축할 수 있는 장점이 있다. 웹 앱을 준비하는 작업은 서버 소프트웨어를 구상하는 것부터 시작 웹서버의 역활은 요청을 받으면 URL을 해석하고 웹 서버 프로그램으로 제어권을 넘겨주는 것이다. 웹서버 프로그램을 구성하는 방식에는 두 가지 주요 형식이 있다. 스크립트 : CGI 스크립트, 자바 서블릿 서버 페이지 : JSP, ASP, PHP 모델 뷰 컨트롤러 모델 뷰 컨트롤러는 잘못 이해되는 경우가 많다. 컨트롤러 용어를 입력 컨트롤러라 생각하면 이해하기 쉽다.모델 뷰 컨트롤러는 잘못 이해되는 경우가 많다. 컨트롤러 용어를 입력 컨트롤러라 생각하면 이해하기 쉽다. 모델 뷰 컨트롤러를 적용하는 가장 중요한 이유는 모델을 웹 프레젠테이션으로 부터 완전이 분리하기 위해서 이다. (프레젠테이션 수정이 쉽다, 다른 프레젠테이션 추가 용이, 테스트 수월) -","url":"http://localhost:4000/jekyll/update/2021/12/21/4%EC%9E%A5.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/update/2021/12/21/4%EC%9E%A5.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="임정찬의 블로그" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">임정찬의 블로그</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">04장 웹 프레젠테이션 패턴</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2021-12-21T00:58:03+09:00" itemprop="datePublished">Dec 21, 2021
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="학습목표--웹-프레젠테이션-계층에서-고려해야될-패턴에-대해-알아보자">학습목표 : 웹 프레젠테이션 계층에서 고려해야될 패턴에 대해 알아보자.</h2>
+<h4 id="웹-프레젠테이션-패턴"><strong>웹 프레젠테이션 패턴</strong></h4>
+<ol>
+  <li>웹 브라우저 기반 사용자 인터페이스는 클라이언트 소프트웨어를 설치할 필요가 없고, 공통적인 UI를 제공하며, 사용하기 쉬운 범용적 접근을 제공하며, 다양한 환경에서 손쉽게 앱을 구축할 수 있는 장점이 있다.</li>
+  <li>웹 앱을 준비하는 작업은 서버 소프트웨어를 구상하는 것부터 시작 웹서버의 역활은 요청을 받으면 URL을 해석하고 웹 서버 프로그램으로 제어권을 넘겨주는 것이다.</li>
+  <li>웹서버 프로그램을 구성하는 방식에는 두 가지 주요 형식이 있다.
+    <ul>
+      <li>스크립트  : CGI 스크립트, 자바 서블릿</li>
+      <li>서버 페이지 : JSP, ASP, PHP</li>
+    </ul>
+  </li>
+  <li>모델 뷰 컨트롤러
+    <ul>
+      <li>모델 뷰 컨트롤러는 잘못 이해되는 경우가 많다. 컨트롤러 용어를 입력 컨트롤러라 생각하면 이해하기 쉽다.모델 뷰 컨트롤러는 잘못 이해되는 경우가 많다. 컨트롤러 용어를 입력 컨트롤러라 생각하면 이해하기 쉽다.</li>
+      <li>모델 뷰 컨트롤러를 적용하는 가장 중요한 이유는 모델을 웹 프레젠테이션으로 부터 완전이 분리하기 위해서 이다. (프레젠테이션 수정이 쉽다, 다른 프레젠테이션 추가 용이, 테스트 수월)
+    - <img src="http://localhost:4000/img/KakaoTalk_20211220_235406822_02.jpg" alt="Image Alt 모델 뷰 컨트롤러" /></li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="뷰-패턴"><strong>뷰 패턴</strong></h4>
+<ol>
+  <li>템플릿 뷰 or 변환 뷰  : 템플릿 뷰나 변환 뷰 중 어느것을 선택할지 결정한다.
+    <ul>
+      <li>템플릿 뷰
+        <ul>
+          <li>템플릿 뷰를 사용하면 페이지 구조안에 프레젠테이션을 작성하고 페이지에 표식을 삽입해 동적 콘텐츠를 넣을 위치를 지정할 수 있다.( JSP, ASP, PHP)</li>
+          <li>강력하고 유연하지만 관리하기 어려운 복잡한 코트로 이어질 가능성이 높다.</li>
+        </ul>
+      </li>
+      <li>변환 뷰
+        <ul>
+          <li>변환 스타일의 프로그램을 사용(ex : XSLT)</li>
+          <li>이 패턴은 사용할 도메인 데이터가 xml형식 이거나 xml형식으로 쉽게 변환할 수 있을때 효과적 이다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>1단계 뷰 or 2단계 뷰 : 1단계 뷰나 2단계 뷰 중 어느것을 선택할지 결정한다.
+    <ul>
+      <li>1단계 뷰 : 애플리케이션 화면당 뷰 컴포넌트 하나를 사용
+    - <img src="http://localhost:4000/img/KakaoTalk_20211221_000604368.jpg" alt="Image Alt 모델 뷰 컨트롤러" /></li>
+      <li>2단계 뷰 : 도메인 논리로부터  논리적 화면을 생성한 다음 이를 HTML 랜더링하는 두단계로 나눈것, 전체 애플리케이션에 하나만 있다.
+    - <img src="http://localhost:4000/img/KakaoTalk_20211221_000604368_01.jpg" alt="Image Alt 모델 뷰 컨트롤러" /></li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="입력-콘트롤러-패턴"><strong>입력 콘트롤러 패턴</strong></h4>
+<ol>
+  <li>컨트롤러가 뷰와 입력 컨트롤러의 역할을 결합한 서버 페이지 하나인 경우로 페이지마다 컨트롤러를 만든다.</li>
+  <li>하나의 컨트롤러로 모든 HTTP 요청을 처리한다. 프런트 컨트롤러는 URL를 분석해 요청을 파악하고 별도의 객체를 생성한다.</li>
+</ol>
+
+  </div><a class="u-url" href="/jekyll/update/2021/12/21/4%EC%9E%A5.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">임정찬의 블로그</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">임정찬의 블로그</li><li><a class="u-email" href="mailto:vibrissa@starlabs.co.kr">vibrissa@starlabs.co.kr</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/LimJeongchan"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">LimJeongchan</span></a></li><li><a href="https://www.twitter.com/vibrissa"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">vibrissa</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
