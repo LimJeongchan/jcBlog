@@ -56,8 +56,7 @@ categories: study update
 				}
 			}
 		```
-	- java Observale 이용
-		- Button
+	- javaObserver 이용
 		```java
 			package com.jcblog.javaObserver;
 			import java.util.Observable;
@@ -68,9 +67,7 @@ categories: study update
 					notifyObservers();
 				}
 			}
-		```
-		- Application
-		```java
+
 			package com.jcblog.javaObserver;
 
 			import java.util.Observable;
