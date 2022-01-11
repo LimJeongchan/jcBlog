@@ -21,7 +21,7 @@ categories: study update
 	2. 데이터를 구독하는쪽에서 데이터를 가져가는 방식  (풀 (Pull)방식
 - ![Head First Design Patterns]({{site.url}}/{{site.baseurl}}/img/head.jpg )
 - ![Weather-O-Rama]({{site.url}}/{{site.baseurl}}/img/weather.png )
-	- Observer (interface)
+	- 1. Observer (interface)
 	```java
 		package com.jcblog.Weather;
 
@@ -31,7 +31,7 @@ categories: study update
 		}
 	```
 	
-	- Subject (interface)
+	- 2. Subject (interface)
 	```java
 		package com.jcblog.Weather;
 
@@ -44,7 +44,7 @@ categories: study update
 		}
 	```
 	
-	- DisplayElement (interface)
+	- 3. DisplayElement (interface)
 	```java
 		package com.jcblog.Weather;
 
@@ -53,7 +53,7 @@ categories: study update
 		}
 	```
 	
-	- WeatherData
+	- 4. WeatherData
 	```java
 		package com.jcblog.Weather;
 
@@ -129,7 +129,7 @@ categories: study update
 		}
 	```
 	
-	- CurrentConditionsDisplay
+	- 5. CurrentConditionsDisplay
 	```java
 		package com.jcblog.Weather;
 
@@ -169,7 +169,7 @@ categories: study update
 		}
 	```	
 	
-	- ForecastDisplay
+	- 6. ForecastDisplay
 	```java
 		package com.jcblog.Weather;
 
@@ -211,7 +211,7 @@ categories: study update
 		}
 	```	
 	
-	- StatisticsDisplay
+	- 7. StatisticsDisplay
 	```java
 		package com.jcblog.Weather;
 
@@ -267,7 +267,7 @@ categories: study update
 		}
 	```	
 	
-	- WeatherStation
+	- 8. WeatherStation
 	```java
 		package com.jcblog.Weather;
 
@@ -304,7 +304,7 @@ categories: study update
 		}
 	```	
 	
-	- WeatherStation
+	- 9. WeatherStation
 	```java
 		package com.jcblog.Weather;
 
